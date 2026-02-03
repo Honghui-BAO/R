@@ -113,7 +113,9 @@ class D3Dataset(Dataset):
             if i == 0:
                 history += "\"" + row['history_item_title'][i] + "\""
             else:
-                history += ", \"" + row['history_item_title'][i] + "\""
+                title = row['history_item_title'][i]
+                if title is not None and title != "":
+                    history += ', "' + str(title) + '"'
         target_item = str(row['item_title'])
         target_item = "\"" + target_item + "\""
         target_item_id = row["item_id"]
