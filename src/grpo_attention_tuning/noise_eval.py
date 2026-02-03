@@ -34,10 +34,10 @@ def main(
         length_penalty: float = 1.0
 ):
 
-    category_dict = {"Office_Products": "office products", "Books": "books", "steam": "games",
+    category_dict = {"Office_Products": "office products", "Books": "books", "steam": "games","Beauty":"Beauty",
                      "CDs_and_Vinyl": "musics", "Toys_and_Games": "toys and games", "Video_Games": "video games",
                      "Musical_Instruments": "music instruments", "Sports_and_Outdoors": "sports and outdoors",
-                     "Pet_Supplies": "pet supplies", "Arts_Crafts_and_Sewing": "arts products", "STEAM": "games", "Movies": "movie",
+                     "Pet_Supplies": "pet supplies", "Arts_Crafts_and_Sewing": "arts products", "Movies": "movie",
                      "yelp": "resturant"}
     category = category_dict[category]
     model = LatentModel.from_pretrained(base_model, torch_dtype=torch.bfloat16,
