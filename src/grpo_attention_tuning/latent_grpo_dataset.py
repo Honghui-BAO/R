@@ -106,20 +106,18 @@ class D3Dataset(Dataset):
 {data_point["output"]}"""
 
     def get_history(self, row):
-        row['history_item_title'] = eval(row['history_item_title'])
-        L = len(row['history_item_title'])
-        history = ""
-        for i in range(L):
-            if i == 0:
-                history += "\"" + row['history_item_title'][i] + "\""
-            else:
-                title = row['history_item_title'][i]
-                if title is not None and title != "":
-                    history += ', "' + str(title) + '"'
+        history_titles = eval(row['history_item_title'])
+        # Filter out None and empty strings, and ensure everything is a string
+        valid_titles = [str(t) for t in history_titles if t is not None and str(t).strip() != ""]
+        history = ", ".join([f'"{t}"' for t in valid_titles])
+
         target_item = str(row['item_title'])
         target_item = "\"" + target_item + "\""
         target_item_id = row["item_id"]
-        last_history_item_id = eval(row["history_item_id"])[-1]
+
+        history_ids = eval(row["history_item_id"])
+        last_history_item_id = history_ids[-1] if len(history_ids) > 0 else None
+
         return {"input": f"The user has palyed the following {self.category}s before: {history}",
                 "output": target_item + '\n',
                 "dedup": target_item_id == last_history_item_id}
